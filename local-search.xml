@@ -3,5 +3,32 @@
   
   
   
+  <entry>
+    <title>Git子模块——在Git中再嵌套一个Git</title>
+    <link href="/2020/05/13/git%E5%AD%90%E6%A8%A1%E5%9D%97/"/>
+    <url>/2020/05/13/git%E5%AD%90%E6%A8%A1%E5%9D%97/</url>
+    
+    <content type="html"><![CDATA[<p>最近终于动手把博客好好地弄起来了！第一篇博文还是忍不住感叹一下～</p><p>第一篇文章，就从我部署博客遇到的问题说起。</p><h2 id="问题描述">问题描述</h2><p>在搭建博客的过程中，我们往往为了美观会使用<ins>第三方主题</ins>。然后我遇到了这样一个问题：我想在我的Hexo博客中，<ins>尽可能方便地保持我的主题是最新的</ins>。</p><p>（我真的非常享受体会各种软件的各种新功能hahaha）</p><p>于是我就想在我的博客代码中，<code>git clone</code> 拿到主题的最新代码，并且可以更新。但是我的博客代码本身就已经有git版本管理，这就涉及到了Git子模块内容。</p><div class="note note-warning"><p>如果只是想拿一次主题代码（或者说子项目代码），而并不打算以后同步更新远程仓库的话，是无需使用Git子模块的。这种情景简单的办法有：拉到主题（子项目代码）后删除子项目目录中的.git文件夹（及.gitignore等git相关文件）即可。请结合好自己的需求。</p></div><div class="note note-info"><p>为了方便说明，我后面用<code>父项目</code>代表<code>博客</code>，<code>子项目</code>代表博客里的<code>主题</code></p></div><p>首先，如果我们在一个Git项目中直接再<code>git clone</code>一个项目看看会有什么效果：</p><pre><code class="hljs bash"><span class="hljs-comment"># 先创建一个父项目，初始化Git</span>$ <span class="hljs-built_in">cd</span> parent$ git init已初始化空的 Git 仓库于 /path/to/parent<span class="hljs-comment"># 放一个测试用的文件id，存入1</span>$ <span class="hljs-built_in">echo</span> <span class="hljs-string">'1'</span> &gt; id<span class="hljs-comment"># 远程拉一个子项目代码</span>$ git <span class="hljs-built_in">clone</span> https://github.com/your/subProject son$ git status位于分支 master尚无提交未跟踪的文件:  （使用 <span class="hljs-string">"git add &lt;文件&gt;..."</span> 以包含要提交的内容）        id        son/提交为空，但是存在尚未跟踪的文件（使用 <span class="hljs-string">"git add"</span> 建立跟踪）<span class="hljs-comment"># 修改子项目内容</span>$ <span class="hljs-built_in">cd</span> son$ <span class="hljs-built_in">echo</span> <span class="hljs-string">'son'</span> &gt; name<span class="hljs-comment"># 我们添加文件到git就会报提示，大致内容就是：“你在本库（父项目）中添加了其他库（子项目），</span><span class="hljs-comment"># 如果你在其他地方clone父项目，将不会包含子项目的内容。你可能要用到git submodule。”</span>$ git all --all<span class="hljs-comment"># 提示：You've added another git repository inside your current repository.</span><span class="hljs-comment"># 提示：Clones of the outer repository will not contain the contents of</span><span class="hljs-comment"># 提示：the embedded repository and will not know how to obtain it.</span><span class="hljs-comment"># 提示：If you meant to add a submodule, use:</span><span class="hljs-comment"># 提示：</span><span class="hljs-comment"># 提示：  git submodule add &lt;url&gt; son</span><span class="hljs-comment"># 提示：</span><span class="hljs-comment"># 提示：If you added this path by mistake, you can remove it from the</span><span class="hljs-comment"># 提示：index with:</span><span class="hljs-comment"># 提示：</span><span class="hljs-comment"># 提示：  git rm --cached son</span><span class="hljs-comment"># 提示：</span><span class="hljs-comment"># 提示：See "git help submodule" for more information.</span><span class="hljs-comment"># 这时我们可以看到son/name并没有被添加到git，只有个son文件夹</span>$ git status位于分支 master尚无提交要提交的变更：  （使用 <span class="hljs-string">"git rm --cached &lt;文件&gt;..."</span> 以取消暂存）        新文件：   id        新文件：   son</code></pre><p>经过实践，我们发现直接在项目中<code>git clone</code>子项目是达不到我们要的效果的。因此我们学习学习<code>Git子模块</code>。</p><h2 id="Git子模块">Git子模块</h2><div class="note note-info"><p>主要参考自<a href="%5Bhttp%5D(https://git-scm.com/book/zh/v2/Git-%E5%B7%A5%E5%85%B7-%E5%AD%90%E6%A8%A1%E5%9D%97)">Git官网</a></p></div><h3 id="创建一个父项目">创建一个父项目</h3>]]></content>
+    
+    
+    <categories>
+      
+      <category>技术</category>
+      
+      <category>Git</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Git</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
   
 </search>
